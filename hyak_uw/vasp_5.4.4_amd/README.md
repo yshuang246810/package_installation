@@ -25,15 +25,11 @@ Ensure that you have a properly configured `makefile` and `makefile.include` in 
 
 ## 4. Compile VASP
 
-Navigate to the `vasp_amd` directory and execute:
-
-```bash
-make std
-```
-
+Navigate to the `vasp_amd`.
 To clean previous builds before recompiling:
 
 ```bash
+rm -rf build/ bin/* src/*.o src/*.mod
 make clean
 ```
 
