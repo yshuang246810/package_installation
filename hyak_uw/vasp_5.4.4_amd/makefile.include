@@ -1,0 +1,63 @@
+# -------------------- Compiler settings --------------------
+CPP_OPTIONS= -DHOST=\"LinuxIFC\"\
+             -DMPI -DMPI_BLOCK=8000 \
+             -Duse_collective \
+             -DscaLAPACK \
+             -DCACHE_SIZE=4000 \
+             -Davoidalloc \
+             -Duse_bse_te \
+             -Dtbdyn \
+             -Duse_shmem \
+             -DUSE_OPENMP \
+             -DNGZhalf
+
+CPP        = fpp -f_com=no -free -w0  $*$(FUFFIX) $*$(SUFFIX) $(CPP_OPTIONS)
+
+FC         = mpiifort
+FCL        = mpiifort -mkl=sequential -qopenmp
+
+FREE       = -free -names lowercase
+
+FFLAGS     = -assume byterecl -w -O2 -march=native -fopenmp -xHost -msse2 -mavx -mfma
+OFLAG      = -O2 -march=native -fopenmp -xHost -msse2 -mavx -mfma
+OFLAG_IN   = $(OFLAG)
+DEBUG      = -O0
+
+# -------------------- Linker settings --------------------
+MKL_PATH   = /sw/intel/oneAPI/2021.1.0.2659/mkl/2021.1.1/lib/intel64
+MKL_LIBS   = -L$(MKL_PATH) -Wl,--start-group \
+             -lmkl_intel_lp64 -lmkl_core -lmkl_sequential \
+             -Wl,--end-group -lpthread -lm -ldl
+
+BLAS       = $(MKL_LIBS)
+LAPACK     = $(MKL_LIBS)
+SCALAPACK  = -lmkl_scalapack_lp64 -lmkl_blacs_intelmpi_lp64
+
+OBJECTS    = fftmpiw.o fftmpi_map.o fft3dlib.o fftw3d.o
+
+INCS       = -I/sw/intel/oneAPI/2021.1.0.2659/mkl/2021.1.1/include/fftw
+
+LLIBS      = $(SCALAPACK) $(LAPACK) $(BLAS) -qopenmp
+
+OBJECTS_O1 += fftw3dfurth.o fftw3d.o fftmpi.o fftmpiw.o
+OBJECTS_O2 += fft3dlib.o
+
+# For what used to be vasp.5.lib
+CPP_LIB    = $(CPP)
+FC_LIB     = $(FC)
+CC_LIB     = icc
+CFLAGS_LIB = -O
+FFLAGS_LIB = -O1
+FREE_LIB   = $(FREE)
+
+OBJECTS_LIB= linpack_double.o getshmem.o
+
+# For the parser library
+CXX_PARS   = icpc
+
+LIBS       += parser
+LLIBS      += -Lparser -lparser -lstdc++
+
+# -------------------- Build settings --------------------
+SRCDIR     = ../../src
+BINDIR     = ../../bin
