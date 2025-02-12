@@ -7,7 +7,7 @@ https://fair-chem.github.io/core/install.html
 ## Install environmental kernel for interactive jobs
 `module load conda`  
 `mamba create --prefix <your_path> python=3.10 -y`  
-`chgrp -R m4869 <your_path>`  
+`chgrp -R <your_project> <your_path>`  
 `conda activate <your_path>`  
 `mamba install numpy==1.26.4 scipy==1.15.1 ase e3nn pymatgen numba orjson jupyter seaborn pyyaml tqdm submitit tensorboard wandb==0.17.2 ipython ipykernel -y`  
 `mamba install -c conda-forge python-lmdb`  
