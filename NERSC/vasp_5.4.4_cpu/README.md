@@ -25,7 +25,7 @@ module load vasp/5.4.4-cpu
 ```
 
 ## 3. Prepare Makefiles
-Ensure that you have a properly configured `makefile` and `makefile.include` in the `vasp_amd` directory. Use the `makefile` and `makefile.include` from this repository.
+Ensure that you have a properly configured `makefile` and `makefile.include` in the `vasp_5.4.4_cpu` directory. Use the `makefile` and `makefile.include` from this repository.
 
 ## 4. Compile VASP
 
