@@ -1,55 +1,61 @@
-# Building VASP 5.4.4 on NERSC
+# VASP 5.4.4 CPU Compilation on NERSC
 
-This guide provides step-by-step instructions for compiling and installing VASP 5.4.4 on NERSC systems.
+This guide provides step-by-step instructions for compiling VASP on **NERSC CPU nodes**.
 
-## 1. Copy VASP Source Code
+## 1. Copy the VASP Directory
 
-First, create a working directory and copy the VASP source code into it:
+Before compiling, create a new directory for your VASP build:
 
 ```bash
-mkdir ~/vasp_build
-cd ~/vasp_build
-cp -r /path/to/vasp.5.4.4 vasp_5.4.4_cpu
+cp -r /path/to/original/vasp vasp_5.4.4_cpu
 cd vasp_5.4.4_cpu
 ```
 
 ## 2. Load Required Modules
 
-Set up the environment by loading the necessary modules:
+Ensure the necessary modules are loaded for compilation on NERSC:
 
 ```bash
 module reset
-module load vasp/5.4.4-cpu
 module load cpu
 module load PrgEnv-nvidia
 module load cray-hdf5 cray-fftw
 module load intel-mixed
+module load vasp/5.4.4-cpu
 ```
 
 ## 3. Prepare Makefiles
-
-Ensure that you have a properly configured `makefile` and `makefile.include` in the `vasp_5.4.4_cpu` directory. Modify `makefile.include` for optimal performance on NERSC:
-
-Example modifications:
-
-- Set `FC = mpiifort`
-- Enable `-fopenmp`
-- Use `-march=native -xHost` for optimization
-
-This installation is based on the official NERSC VASP guide: [NERSC VASP Documentation](https://docs.nersc.gov/applications/vasp/).
+Ensure that you have a properly configured `makefile` and `makefile.include` in the `vasp_amd` directory. Use the `makefile` and `makefile.include` from this repository.
 
 ## 4. Compile VASP
 
-Navigate to the `vasp.5.4.4` directory and compile:
+Navigate to the `vasp_5.4.4_cpu` directory and execute:
+
+```bash
+make std
+```
+
+To clean previous builds before recompiling:
 
 ```bash
 make clean
-make all
 ```
 
-Compilation should generate the required VASP binaries in the `bin/` directory.
+Manually create the build directory:
 
-## Reference
+```bash
+mkdir -p build/std
+mkdir -p build/ncl
+```
 
-For more details on memory optimization in VASP, refer to:
-[Not Enough Memory - VASP Wiki](https://www.vasp.at/wiki/index.php/Not_enough_memory).
+Then re-run the compilation:
+
+```bash
+make std ncl
+```
+## 5. References
+
+For more details, refer to the official NERSC documentation:
+
+- [NERSC VASP Compilation Guide](https://docs.nersc.gov/applications/vasp/)
+- [VASP Memory Optimization](https://www.vasp.at/wiki/index.php/Not_enough_memory)
