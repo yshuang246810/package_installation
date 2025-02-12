@@ -21,13 +21,7 @@ export MKL_CBWR=AVX2
 ```
 
 ## 3. Prepare Makefiles
-
-Ensure that you have a properly configured `makefile` and `makefile.include` in the `vasp_amd` directory. Modify `makefile.include` for optimal performance on **AMD ckpt-g2**:
-
-Example modifications:
-- Set `FC = mpiifort`
-- Enable `-fopenmp`
-- Use `-march=native -xHost` for optimization
+Ensure that you have a properly configured `makefile` and `makefile.include` in the `vasp_amd` directory. Use the `makefile` and `makefile.include` from this repository.
 
 ## 4. Compile VASP
 
@@ -43,16 +37,17 @@ To clean previous builds before recompiling:
 make clean
 ```
 
-If necessary, manually create the build directory:
+Manually create the build directory:
 
 ```bash
 mkdir -p build/std
+mkdir -p build/ncl
 ```
 
 Then re-run the compilation:
 
 ```bash
-make std
+make std ncl
 ```
 
 ## 5. Submitting a Job on Hyak
@@ -100,8 +95,7 @@ squeue -u $USER
 
 ### Optimization Guidelines:
 - `KPAR` should match the number of **k-points** for best efficiency.
-- `NPAR` should be a factor of the **total number of cores used** (e.g., `NPAR = 64` for 192 cores).
-- If memory usage is too high, reduce `NPAR` and test different values to balance efficiency.
+- If memory usage is too high, increase `NPAR` and test different values to balance efficiency.
 
 ### Checking Memory Usage
 Inspect the VASP output to check memory per MPI rank:
