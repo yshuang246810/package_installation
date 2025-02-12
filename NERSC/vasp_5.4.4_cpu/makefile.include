@@ -1,0 +1,67 @@
+# Precompiler options
+CPP_OPTIONS= -DHOST=\"NVIDIA22.7_CrayMPICH8.1.17\" -DPGI16 \
+             -DMPI -DMPI_BLOCK=8000 \
+             -Duse_collective \
+             -DscaLAPACK \
+             -DCACHE_SIZE=4000 \
+             -Davoidalloc \
+             -Duse_bse_te \
+             -Dtbdyn \
+             -Duse_shmem \
+             -Dqd_emulate \
+             -DDFTD4 \
+             -DVASP2WANNIER90 \
+             -Dlibbeef
+
+CPP        = ftn -Mpreprocess -Mfree -Mextend -E $(CPP_OPTIONS) $*$(FUFFIX)  > $*$(SUFFIX)
+FC         = ftn
+FCL        = ftn -lstdc++ -lgcc_s
+FREE       = -Mfree
+
+FFLAGS     = -Mnoupcase -Mbackslash
+OFLAG      = -fast
+OFLAG_IN   = $(OFLAG)
+DEBUG      = -Mfree -O0 -traceback
+
+EXTLIBDIR  = $(CFS)/omp/local
+
+# Use NVIDIA-provided BLAS and LAPACK libraries
+BLAS       = -lblas
+LAPACK     = -llapack
+BLACS      =
+SCALAPACK  = -L$(EXTLIBDIR)/scalapack-2.1.0/nvidia-22.5/milan -lscalapack
+LLIBS      = $(SCALAPACK) $(LAPACK) $(BLAS)
+
+# Optional plugins
+LLIBS      +=  /global/common/software/nersc9/vasp/dependencies/wannier90/nvidia-23.9/1.2/lib/libwannier.a \
+             $(EXTLIBDIR)/libbeef/2020-11-01/nvidia-22.5/milan/lib/libbeef.a \
+             $(EXTLIBDIR)/dft4/2022-10-13/nvidia-22.5/milan/lib64/libdftd4.a
+INCS      = -I$(EXTLIBDIR)/dft4/2022-10-13/nvidia-22.5/milan/include -I$(EXTLIBDIR)/dft4/2022-10-13/nvidia-22.5/milan/include/dftd4/NVHPC-22.5.0
+
+# Software emulation of quadruple precision
+QD         ?= $(NVIDIA_PATH)/compilers/extras/qd
+LLIBS      += -L$(QD)/lib -lqdmod -lqd -Wl,-rpath=$(QD)/lib
+INCS       += -I$(QD)/include/qd 
+
+OBJECTS    = fftmpiw.o fftmpi_map.o fftw3d.o fft3dlib.o
+OBJECTS_O1 += fftw3d.o fftmpi.o fftmpiw.o broyden.o
+OBJECTS_O2 += fft3dlib.o pead.o
+
+# For what used to be vasp.5.lib
+CPP_LIB    = $(CPP)
+FC_LIB     = ftn 
+CC_LIB     = cc
+CFLAGS_LIB = -O
+FFLAGS_LIB = -O1 -Mfixed
+FREE_LIB   = -Mfree
+
+OBJECTS_LIB= linpack_double.o getshmem.o
+
+# For the parser library
+CXX_PARS   = CC --no_warnings
+LIBS       += parser
+LLIBS      += -Lparser -lparser -lstdc++
+
+# Normally no need to change this
+SRCDIR     = ../../src
+BINDIR     = ../../bin
