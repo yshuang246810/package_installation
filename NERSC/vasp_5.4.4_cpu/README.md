@@ -29,15 +29,11 @@ Ensure that you have a properly configured `makefile` and `makefile.include` in 
 
 ## 4. Compile VASP
 
-Navigate to the `vasp_5.4.4_cpu` directory and execute:
-
-```bash
-make std
-```
-
+Navigate to the `vasp_5.4.4_cpu`.
 To clean previous builds before recompiling:
 
 ```bash
+rm -rf build/ bin/* src/*.o src/*.mod
 make clean
 ```
 
