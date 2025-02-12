@@ -105,3 +105,9 @@ grep 'total amount of memory used by VASP MPI-rank0' OUTCAR
 ```
 
 Adjust `NPAR` and `KPAR` accordingly if memory is insufficient.
+
+For more details on memory optimization, refer to the [VASP Wiki](https://www.vasp.at/wiki/index.php/Not_enough_memory).
+
+## References
+
+- [VASP Wiki: Not Enough Memory](https://www.vasp.at/wiki/index.php/Not_enough_memory)
