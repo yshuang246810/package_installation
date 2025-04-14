@@ -6,6 +6,8 @@ https://github.com/orbital-materials/orb-models/tree/main
 
 Be sure to upload ckpts for orb to NERSC manually when running orb jobs!
 
+Orb can not automatically download ckpts from github.
+
 ## Install environmental kernel for interactive jobs
 `module load conda`  
 
