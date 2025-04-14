@@ -4,7 +4,7 @@ Build mamba(a faster Conda) environment for orb_v3 @ NERSC.
 Execute the instructions in order. 
 https://github.com/orbital-materials/orb-models/tree/main 
 
-Be sure to upload ckpts for orb to NERSC manually!
+Be sure to upload ckpts for orb to NERSC manually when running orb jobs!
 
 ## Install environmental kernel for interactive jobs
 `module load conda`  
