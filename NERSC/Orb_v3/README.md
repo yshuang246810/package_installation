@@ -9,7 +9,7 @@ Be sure to upload ckpts for orb to NERSC manually!
 ## Install environmental kernel for interactive jobs
 `module load conda`  
 
-`amba create --prefix <your_path> python=3.11`
+`mamba create --prefix <your_path> python=3.11`
 
 `pip install orb-models`
 
