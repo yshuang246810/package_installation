@@ -1,4 +1,4 @@
-# nersc-fair-chem-build
+# nersc-orb-v3-build
 Build mamba(a faster Conda) environment for orb_v3 @ NERSC.
 
 Execute the instructions in order. 
