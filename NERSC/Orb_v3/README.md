@@ -19,8 +19,7 @@ Orb can not automatically download ckpts from github.
 
 `pip install --extra-index-url=https://pypi.nvidia.com "cuml-cu12==25.2.*" ` # For cuda versions >=12.0, <13.0 (Use this one.)
 
-`mamba install ase e3nn pymatgen numba orjson jupyter seaborn pyyaml tqdm submitit tensorboard wandb ipython ipykernel torch-dftd scikit-lea
-rn`
+`mamba install ase e3nn pymatgen numba orjson jupyter seaborn pyyaml tqdm submitit tensorboard wandb ipython ipykernel torch-dftd scikit-learn`
 
 `mamba install -c conda-forge python-lmdb` 
 
